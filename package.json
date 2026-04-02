@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "tsc",
     "build": "prisma generate",
     "postinstall": "prisma generate"
   },
@@ -27,6 +27,7 @@
     "morgan": "^1.10.1",
     "nodemailer": "^8.0.4",
     "pg": "^8.20.0",
+    "serverless-http": "^4.0.0",
     "uuid": "^13.0.0",
     "zod": "^4.3.6"
   },

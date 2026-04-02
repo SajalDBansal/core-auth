@@ -6,17 +6,21 @@ import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const createServer = (): Express => {
     const app = express();
     app
         .disable('x-powered-by')
-        .set('views', path.join(process.cwd(), 'src/views'))
+        .set("views", path.join(__dirname, "../src/views"))
         .set('view engine', 'ejs')
         .use(morgan("dev"))
         .use(express.json())
         .use(express.urlencoded({ extended: true }))
-        .use(express.static(path.join(process.cwd(), 'src/public')))
+        .use(express.static(path.join(__dirname, "../src/public")))
         .use(cors())
         .use(cookieParser())
         .get('/', (req, res) => {
