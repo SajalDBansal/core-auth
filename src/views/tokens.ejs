@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Core Auth - Secure Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="<%=url%>/css/output.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#f8f8ff",
+                        "tertiary": "#526075",
+                        "secondary": "#526074",
+                        "surface-container-high": "#e1e9ee",
+                        "on-surface-variant": "#566166",
+                        "primary": "#565e74",
+                        "primary-fixed-dim": "#ccd4ee",
+                        "on-secondary-container": "#455367",
+                        "surface-container-low": "#f0f4f7",
+                        "on-tertiary-fixed-variant": "#4e5c71",
+                        "tertiary-fixed-dim": "#c7d5ee",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#565e74",
+                        "on-primary-container": "#4a5167",
+                        "tertiary-fixed": "#d5e3fd",
+                        "on-primary-fixed-variant": "#535b71",
+                        "error-container": "#fe8983",
+                        "inverse-primary": "#dae2fd",
+                        "inverse-surface": "#0b0f10",
+                        "surface-dim": "#cfdce3",
+                        "on-tertiary-container": "#455367",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#9f403d",
+                        "primary-fixed": "#dae2fd",
+                        "surface-variant": "#d9e4ea",
+                        "surface-container-highest": "#d9e4ea",
+                        "secondary-fixed-dim": "#c7d5ed",
+                        "on-background": "#2a3439",
+                        "surface": "#f7f9fb",
+                        "tertiary-dim": "#465469",
+                        "secondary-dim": "#465468",
+                        "secondary-fixed": "#d5e3fc",
+                        "on-primary-fixed": "#373f54",
+                        "secondary-container": "#d5e3fc",
+                        "on-secondary-fixed-variant": "#4e5c71",
+                        "inverse-on-surface": "#9a9d9f",
+                        "outline-variant": "#a9b4b9",
+                        "tertiary-container": "#d5e3fd",
+                        "on-tertiary-fixed": "#324054",
+                        "on-error": "#fff7f6",
+                        "on-secondary": "#f8f8ff",
+                        "primary-container": "#dae2fd",
+                        "surface-container": "#e8eff3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#f7f7ff",
+                        "error-dim": "#4e0309",
+                        "outline": "#717c82",
+                        "on-surface": "#2a3439",
+                        "primary-dim": "#4a5268",
+                        "on-error-container": "#752121"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+    <!-- TopAppBar -->
+    <header class="w-full sticky top-0 z-50 bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <div class="max-w-[48rem] mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-[#0F172A] dark:text-[#f7f9fb] font-headline tracking-tight">Core
+                    Auth</span>
+            </div>
+            <nav class="hidden md:flex items-center gap-6">
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>">Docs</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>/endpoints">Endpoints</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>/tokens">Tokens</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button
+                    class="text-[#565e74] dark:text-[#a9b4b9] hover:text-[#0F172A] transition-all scale-95 active:opacity-80">
+                    <span class="material-symbols-outlined">terminal</span>
+                </button>
+                <a class="bg-primary text-on-primary px-4 py-1.5 rounded text-sm font-medium hover:opacity-90 transition-all active:scale-95"
+                    href="<%= githubUrl %>">GitHub</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-grow max-w-[48rem] mx-auto w-full px-6 py-12 md:py-20">
+        <div class="max-w-[48rem] mx-auto">
+            <!-- Header -->
+            <header class="mb-16">
+                <div class="flex items-center gap-2 mb-4">
+                    <span
+                        class="px-2 py-0.5 bg-secondary-container text-on-secondary-container font-mono text-[10px] rounded uppercase tracking-widest">Architecture</span>
+                    <span class="text-on-surface-variant text-[10px] font-mono">•</span>
+                    <span class="text-on-surface-variant text-[10px] font-mono">Updated Oct 2024</span>
+                </div>
+                <h1 class="text-5xl font-headline font-bold text-on-surface tracking-tight mb-6">Token Lifecycle &amp;
+                    Rotation</h1>
+                <p class="text-lg text-on-surface-variant leading-relaxed font-light">
+                    An in-depth exploration of how Core Auth handles secure sessions, automated token renewal, and
+                    cryptographic invalidation across distributed systems.
+                </p>
+            </header>
+            <!-- Section: Overview -->
+            <section class="mb-20">
+                <h2 class="text-sm font-mono uppercase tracking-[0.2em] text-on-surface-variant mb-8">01. Identity
+                    Persistence</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-surface-container-lowest p-8 rounded shadow-sm">
+                        <h3 class="font-headline font-bold text-xl mb-3">Access Tokens</h3>
+                        <p class="text-sm text-on-surface-variant leading-relaxed mb-4">Short-lived credentials (JWT)
+                            used
+                            to authorize requests. Designed for stateless verification at the edge.</p>
+                        <div
+                            class="bg-surface-container-highest p-4 rounded font-mono text-xs text-on-tertiary-container">
+                            TTL: 15 Minutes<br>
+                            Type: Bearer JWT
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-lowest p-8 rounded shadow-sm">
+                        <h3 class="font-headline font-bold text-xl mb-3">Refresh Tokens</h3>
+                        <p class="text-sm text-on-surface-variant leading-relaxed mb-4">Long-lived opaque tokens used to
+                            request new access tokens. Stored securely in HttpOnly cookies.</p>
+                        <div
+                            class="bg-surface-container-highest p-4 rounded font-mono text-xs text-on-tertiary-container">
+                            TTL: 7 Days<br>
+                            Type: Opaque / Database-backed
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Sequence Diagram -->
+            <section class="mb-20">
+                <h2 class="text-sm font-mono uppercase tracking-[0.2em] text-on-surface-variant mb-8">02. The Rotation
+                    Mechanism</h2>
+                <div
+                    class="bg-surface-container-low p-12 rounded overflow-hidden relative border-l-4 border-primary/20">
+                    <!-- Conceptual Diagram -->
+                    <div class="flex flex-col gap-12 items-center">
+                        <div class="flex justify-between w-full relative">
+                            <div class="flex flex-col items-center gap-2 z-10">
+                                <div
+                                    class="w-12 h-12 bg-surface-container-lowest flex items-center justify-center rounded-full border border-outline-variant/20 shadow-sm">
+                                    <span class="material-symbols-outlined text-primary">laptop_mac</span>
+                                </div>
+                                <span class="text-[10px] font-mono text-on-surface-variant uppercase">Client</span>
+                            </div>
+                            <!-- Connecting Line -->
+                            <div class="absolute top-6 left-0 right-0 h-[1px] bg-outline-variant/30 -z-0"></div>
+                            <div class="flex flex-col items-center gap-2 z-10">
+                                <div
+                                    class="w-12 h-12 bg-primary flex items-center justify-center rounded-full shadow-lg">
+                                    <span class="material-symbols-outlined text-white">shield_lock</span>
+                                </div>
+                                <span class="text-[10px] font-mono text-primary font-bold uppercase">Core Auth
+                                    Hub</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 z-10">
+                                <div
+                                    class="w-12 h-12 bg-surface-container-lowest flex items-center justify-center rounded-full border border-outline-variant/20 shadow-sm">
+                                    <span class="material-symbols-outlined text-primary">database</span>
+                                </div>
+                                <span class="text-[10px] font-mono text-on-surface-variant uppercase">Resource</span>
+                            </div>
+                        </div>
+                        <div class="w-full space-y-6">
+                            <div class="flex items-start gap-4">
+                                <span
+                                    class="font-mono text-xs text-primary bg-primary-container/40 px-2 py-0.5 rounded">01</span>
+                                <p class="text-sm text-on-surface leading-relaxed">
+                                    Access token expires. Client sends <code
+                                        class="bg-surface-container-highest px-1 rounded font-mono text-xs">POST /auth/refresh</code>
+                                    with the current Refresh Token.
+                                </p>
+                            </div>
+                            <div class="flex items-start gap-4 ml-8">
+                                <span
+                                    class="font-mono text-xs text-on-surface-variant border border-outline-variant/30 px-2 py-0.5 rounded">02</span>
+                                <p class="text-sm text-on-surface-variant leading-relaxed">
+                                    Hub validates the refresh token in the database. If valid, the hub <span
+                                        class="font-bold text-on-surface">invalidates</span> the old refresh token
+                                    immediately.
+                                </p>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <span
+                                    class="font-mono text-xs text-primary bg-primary-container/40 px-2 py-0.5 rounded">03</span>
+                                <p class="text-sm text-on-surface leading-relaxed">
+                                    Hub issues a <span class="italic">brand new pair</span> of tokens. This "Rotation"
+                                    ensures that if a token is stolen, the attacker can only use it once before the
+                                    legitimate user triggers an invalidation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Technical Deep Dive -->
+            <section class="mb-20">
+                <h2 class="text-sm font-mono uppercase tracking-[0.2em] text-on-surface-variant mb-8">03. Invalidation
+                    Logic
+                </h2>
+                <div class="space-y-12">
+                    <div class="relative pl-12 border-l border-outline-variant/20">
+                        <h4 class="font-headline font-bold text-lg mb-2">Passive Revocation (JWT)</h4>
+                        <p class="text-sm text-on-surface-variant leading-relaxed mb-4">
+                            Access tokens are not checked against a database on every request to maintain low latency.
+                            Instead, they expire naturally. To force logout, we rely on rotating the Refresh Token.
+                        </p>
+                    </div>
+                    <div class="relative pl-12 border-l border-outline-variant/20">
+                        <h4 class="font-headline font-bold text-lg mb-2">Active Revocation (Opaque)</h4>
+                        <p class="text-sm text-on-surface-variant leading-relaxed mb-4">
+                            When a user clicks 'Logout', the specific Refresh Token is deleted from our Redis cluster.
+                            All
+                            subsequent refresh attempts will fail, effectively killing the session once the current
+                            Access
+                            Token expires.
+                        </p>
+                        <div class="bg-surface-container-highest p-6 rounded mt-4">
+                            <pre class="text-xs text-on-tertiary-container overflow-x-auto"><code>// Logout execution logic
+    async function logout(refreshToken) {
+      const tokenRecord = await db.tokens.find({ value: refreshToken });
+      await db.tokens.delete(tokenRecord.id);
+      // Clear client cookies
+      cookies.delete('core_refresh_token');
+      return { status: 'revoked' };
+    }</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Best Practices Bento -->
+            <section class="mb-20">
+                <h2 class="text-sm font-mono uppercase tracking-[0.2em] text-on-surface-variant mb-8">04. Security Best
+                    Practices</h2>
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+                    <div class="md:col-span-3 bg-surface-container-low p-8 rounded">
+                        <span class="material-symbols-outlined text-primary mb-4" data-weight="fill">cookie</span>
+                        <h4 class="font-headline font-bold mb-2">Use HttpOnly Cookies</h4>
+                        <p class="text-xs text-on-surface-variant leading-relaxed">Prevent XSS attacks by storing tokens
+                            in
+                            cookies that are inaccessible to JavaScript. Set <code
+                                class="font-mono bg-surface-container-highest px-1">SameSite=Strict</code> for maximum
+                            protection.</p>
+                    </div>
+                    <div class="md:col-span-3 bg-surface-container-low p-8 rounded">
+                        <span class="material-symbols-outlined text-primary mb-4" data-weight="fill">history</span>
+                        <h4 class="font-headline font-bold mb-2">Grace Periods</h4>
+                        <p class="text-xs text-on-surface-variant leading-relaxed">Implement a 30-second grace period
+                            for
+                            old refresh tokens to handle race conditions in high-latency environments without triggering
+                            security alerts.</p>
+                    </div>
+                    <div class="md:col-span-2 bg-surface-container-high p-8 rounded">
+                        <h4 class="font-headline font-bold mb-2">Token Pinning</h4>
+                        <p class="text-xs text-on-surface-variant leading-relaxed">Optionally bind tokens to a specific
+                            IP
+                            or User-Agent to prevent session hijacking across different networks.</p>
+                    </div>
+                    <div
+                        class="md:col-span-4 bg-inverse-surface text-surface p-8 rounded flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-headline font-bold mb-2">Detection of Reuse</h4>
+                            <p class="text-xs text-on-surface-variant leading-relaxed">If a refresh token is reused
+                                after it
+                                has been rotated, Core Auth treats this as a breach and invalidates the <b>entire
+                                    session
+                                    family</b> immediately.</p>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-on-error">Critical
+                                Security
+                                Protocol</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Image Asset -->
+            <div class="mb-20">
+                <img class="w-full h-64 object-cover rounded shadow-2xl opacity-80 grayscale hover:grayscale-0 transition-all duration-700"
+                    data-alt="abstract high-tech visualization of digital glowing circuitry paths representing secure data flow and authentication architecture"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXj4MtkyxEfk0sfqLOrT6Q6HLxsg1CBVTXvtCMCZasDYVT-DArWnFC2ZhWVnWSc_gqv-b5WUWNCTYn9TyF1Es3g1VNoSPIYGei0YwsM4KJnyQFpFELSCXLP2uENEDR_M1Iqq4XA6SYf5wCXDUYAZUXT7GA9KKrQYFbLbwtSbGPCm7Eu88H6MFoN9hl9PcVusKDN8qOJk13_8OPtB1g3X04_Kk9hBaGApEMvmnpfADOVXsbvWRXZEwtlfTE6i0eTToj0xSO-nq9L2S6">
+            </div>
+            <!-- CTA -->
+            <footer class="pt-16 border-t border-outline-variant/10 text-center">
+                <p class="text-on-surface-variant text-sm mb-6">Ready to implement the flow?</p>
+                <div class="flex justify-center gap-4">
+                    <button
+                        class="bg-primary text-on-primary px-8 py-3 rounded-lg font-medium hover:bg-primary-dim transition-all shadow-lg">Start
+                        Integration</button>
+                    <button
+                        class="bg-surface-container-high text-on-surface px-8 py-3 rounded-lg font-medium hover:bg-surface-container-highest transition-all">View
+                        API Spec</button>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full mt-auto bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <div class="max-w-[48rem] mx-auto flex flex-col md:flex-row justify-between items-center py-12 px-6 opacity-60">
+            <span
+                class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#565e74] dark:text-[#a9b4b9] mb-4 md:mb-0">©
+                2024 Core Auth Infrastructure</span>
+            <div class="flex gap-6">
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Status</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Security</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Privacy</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">API Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

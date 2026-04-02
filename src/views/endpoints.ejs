@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Core Auth - Secure Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="<%=url%>/css/output.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#f8f8ff",
+                        "tertiary": "#526075",
+                        "secondary": "#526074",
+                        "surface-container-high": "#e1e9ee",
+                        "on-surface-variant": "#566166",
+                        "primary": "#565e74",
+                        "primary-fixed-dim": "#ccd4ee",
+                        "on-secondary-container": "#455367",
+                        "surface-container-low": "#f0f4f7",
+                        "on-tertiary-fixed-variant": "#4e5c71",
+                        "tertiary-fixed-dim": "#c7d5ee",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#565e74",
+                        "on-primary-container": "#4a5167",
+                        "tertiary-fixed": "#d5e3fd",
+                        "on-primary-fixed-variant": "#535b71",
+                        "error-container": "#fe8983",
+                        "inverse-primary": "#dae2fd",
+                        "inverse-surface": "#0b0f10",
+                        "surface-dim": "#cfdce3",
+                        "on-tertiary-container": "#455367",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#9f403d",
+                        "primary-fixed": "#dae2fd",
+                        "surface-variant": "#d9e4ea",
+                        "surface-container-highest": "#d9e4ea",
+                        "secondary-fixed-dim": "#c7d5ed",
+                        "on-background": "#2a3439",
+                        "surface": "#f7f9fb",
+                        "tertiary-dim": "#465469",
+                        "secondary-dim": "#465468",
+                        "secondary-fixed": "#d5e3fc",
+                        "on-primary-fixed": "#373f54",
+                        "secondary-container": "#d5e3fc",
+                        "on-secondary-fixed-variant": "#4e5c71",
+                        "inverse-on-surface": "#9a9d9f",
+                        "outline-variant": "#a9b4b9",
+                        "tertiary-container": "#d5e3fd",
+                        "on-tertiary-fixed": "#324054",
+                        "on-error": "#fff7f6",
+                        "on-secondary": "#f8f8ff",
+                        "primary-container": "#dae2fd",
+                        "surface-container": "#e8eff3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#f7f7ff",
+                        "error-dim": "#4e0309",
+                        "outline": "#717c82",
+                        "on-surface": "#2a3439",
+                        "primary-dim": "#4a5268",
+                        "on-error-container": "#752121"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+    <!-- TopAppBar -->
+    <header class="w-full sticky top-0 z-50 bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <div class="max-w-[48rem] mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-[#0F172A] dark:text-[#f7f9fb] font-headline tracking-tight">Core
+                    Auth</span>
+            </div>
+            <nav class="hidden md:flex items-center gap-6">
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>">Docs</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>/endpoints">Endpoints</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>/tokens">Tokens</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button
+                    class="text-[#565e74] dark:text-[#a9b4b9] hover:text-[#0F172A] transition-all scale-95 active:opacity-80">
+                    <span class="material-symbols-outlined">terminal</span>
+                </button>
+                <a class="bg-primary text-on-primary px-4 py-1.5 rounded text-sm font-medium hover:opacity-90 transition-all active:scale-95"
+                    href="<%= githubUrl %>">GitHub</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-grow max-w-[48rem] mx-auto w-full px-6 py-12 md:py-20">
+        <!-- Header Section -->
+        <header class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <span
+                    class="label-sm font-mono text-[0.7rem] px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded tracking-widest uppercase">Version
+                    1.0.0</span>
+            </div>
+            <h1 class="text-5xl font-headline font-bold text-on-surface leading-[1.1] mb-6">Endpoints</h1>
+            <p class="text-on-surface-variant text-lg font-light leading-relaxed">
+                Comprehensive reference for the Core Auth API. All endpoints are versioned and follow RESTful
+                principles.
+                Base URL: <code
+                    class="bg-surface-container-highest px-1.5 py-0.5 rounded font-mono text-sm">https://api.coreauth.io/v2</code>
+            </p>
+        </header>
+        <!-- API Route Sections -->
+        <div class="space-y-16">
+            <!-- Endpoint: Register -->
+            <section class="group">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="bg-secondary-container text-on-secondary-container font-mono text-xs px-3 py-1 rounded-full font-bold">POST</span>
+                        <h2 class="font-mono text-lg font-semibold tracking-tight">/api/auth/register</h2>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-outline text-sm">lock_open</span>
+                        <span class="text-on-surface-variant font-mono text-xs uppercase tracking-tighter">No Auth
+                            Required</span>
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest rounded-xl p-8 mb-4">
+                    <p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Creates a new user identity within the specified tenant. This endpoint triggers the <code
+                            class="font-mono text-primary italic">USER_CREATED</code> webhook event if configured.
+                    </p>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="label-sm text-[0.65rem] font-mono text-outline uppercase tracking-[0.2em] mb-3">
+                                Request Payload</h3>
+                            <div class="bg-surface-container-highest p-6 rounded-lg overflow-x-auto relative group">
+                                <button
+                                    class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container-high p-1.5 rounded-lg text-on-surface-variant hover:text-on-surface">
+                                    <span class="material-symbols-outlined text-lg">content_copy</span>
+                                </button>
+                                <pre class="code-block text-[0.875rem] leading-relaxed text-on-surface"><code class="language-json">{
+      "email": "architect@coreauth.io",
+      "password": "••••••••••••",
+      "name": "Standard Architect",
+      "metadata": {
+        "role": "admin",
+        "tier": "enterprise"
+      }
+    }</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Endpoint: Login -->
+            <section class="group">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="bg-secondary-container text-on-secondary-container font-mono text-xs px-3 py-1 rounded-full font-bold">POST</span>
+                        <h2 class="font-mono text-lg font-semibold tracking-tight">/api/auth/login</h2>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-outline text-sm">lock_open</span>
+                        <span class="text-on-surface-variant font-mono text-xs uppercase tracking-tighter">No Auth
+                            Required</span>
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest rounded-xl p-8 mb-4">
+                    <p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Exchanges credentials for a JWT. On success, returns an <code
+                            class="font-mono text-primary">accessToken</code> in the body and sets a secure <code
+                            class="font-mono text-primary">refreshToken</code> cookie.
+                    </p>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="label-sm text-[0.65rem] font-mono text-outline uppercase tracking-[0.2em] mb-3">
+                                Request Payload</h3>
+                            <div class="bg-surface-container-highest p-6 rounded-lg overflow-x-auto">
+                                <pre class="code-block text-[0.875rem] leading-relaxed text-on-surface"><code class="language-json">{
+      "email": "architect@coreauth.io",
+      "password": "••••••••••••",
+      "mfa_token": "123456" // Optional
+    }</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Endpoint: Profile (Protected) -->
+            <section class="group">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="bg-secondary-container text-on-secondary-container font-mono text-xs px-3 py-1 rounded-full font-bold">GET</span>
+                        <h2 class="font-mono text-lg font-semibold tracking-tight">/api/auth/profile</h2>
+                    </div>
+                    <div class="flex items-center gap-2 bg-primary-container/30 px-2 py-1 rounded">
+                        <span class="material-symbols-outlined text-primary text-sm">key</span>
+                        <span
+                            class="text-on-primary-container font-mono text-xs uppercase tracking-tighter font-medium">Bearer
+                            Token</span>
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest rounded-xl p-8 mb-4">
+                    <p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Retrieves the current authenticated user's object. Requires a valid JWT in the Authorization
+                        header.
+                    </p>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="label-sm text-[0.65rem] font-mono text-outline uppercase tracking-[0.2em] mb-3">
+                                Authorization Header</h3>
+                            <div class="bg-surface-container-highest p-4 rounded-lg">
+                                <p class="font-mono text-xs text-on-surface-variant">Authorization: Bearer <span
+                                        class="text-primary-dim">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="label-sm text-[0.65rem] font-mono text-outline uppercase tracking-[0.2em] mb-3">
+                                Response Object (200 OK)</h3>
+                            <div class="bg-surface-container-highest p-6 rounded-lg overflow-x-auto">
+                                <pre class="code-block text-[0.875rem] leading-relaxed text-on-surface"><code class="language-json">{
+      "id": "usr_9921_xK",
+      "email": "architect@coreauth.io",
+      "status": "verified",
+      "last_login": "2024-10-12T14:22:01Z"
+    }</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Endpoint: Refresh (Cookie based) -->
+            <section class="group">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="bg-secondary-container text-on-secondary-container font-mono text-xs px-3 py-1 rounded-full font-bold">POST</span>
+                        <h2 class="font-mono text-lg font-semibold tracking-tight">/api/auth/refresh</h2>
+                    </div>
+                    <div class="flex items-center gap-2 bg-surface-container-high px-2 py-1 rounded">
+                        <span class="material-symbols-outlined text-outline text-sm">cookie</span>
+                        <span class="text-on-surface-variant font-mono text-xs uppercase tracking-tighter">refreshToken
+                            Cookie</span>
+                    </div>
+                </div>
+                <div class="bg-surface-container-lowest rounded-xl p-8 mb-4">
+                    <p class="text-on-surface-variant text-sm mb-6 leading-relaxed">
+                        Renews the access token using the HttpOnly refresh token cookie. This endpoint implements token
+                        rotation for maximum security.
+                    </p>
+                    <div class="bg-surface-container-low p-6 rounded-lg border-l-4 border-primary/20">
+                        <div class="flex gap-4">
+                            <span class="material-symbols-outlined text-primary">info</span>
+                            <p class="text-xs font-mono text-on-surface-variant leading-relaxed">
+                                No body required. The service automatically extracts the <code
+                                    class="bg-surface-container-highest px-1 rounded">refreshToken</code> from the
+                                request
+                                headers. Returns a new <code
+                                    class="bg-surface-container-highest px-1 rounded">accessToken</code>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Call to Action -->
+        <div class="mt-20 p-12 bg-inverse-surface rounded-2xl text-center relative overflow-hidden">
+            <div
+                class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,_#565e74_0%,_transparent_70%)]">
+            </div>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-headline font-bold text-surface-bright mb-4">Ready to implement?</h2>
+                <p class="text-inverse-on-surface mb-8 max-w-md mx-auto">Download our official SDKs for Node.js, Go, and
+                    Python to get started in minutes.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button
+                        class="bg-surface-bright text-inverse-surface px-8 py-3 rounded-lg font-bold hover:bg-white transition-all">View
+                        SDKs</button>
+                    <button
+                        class="text-surface-bright px-8 py-3 rounded-lg font-bold hover:bg-white/10 transition-all">Join
+                        Discord</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="w-full mt-auto bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <div class="max-w-[48rem] mx-auto flex flex-col md:flex-row justify-between items-center py-12 px-6 opacity-60">
+            <span
+                class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#565e74] dark:text-[#a9b4b9] mb-4 md:mb-0">©
+                2024 Core Auth Infrastructure</span>
+            <div class="flex gap-6">
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Status</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Security</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Privacy</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">API Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Core Auth - Secure Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="<%=url%>/css/output.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#f8f8ff",
+                        "tertiary": "#526075",
+                        "secondary": "#526074",
+                        "surface-container-high": "#e1e9ee",
+                        "on-surface-variant": "#566166",
+                        "primary": "#565e74",
+                        "primary-fixed-dim": "#ccd4ee",
+                        "on-secondary-container": "#455367",
+                        "surface-container-low": "#f0f4f7",
+                        "on-tertiary-fixed-variant": "#4e5c71",
+                        "tertiary-fixed-dim": "#c7d5ee",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#565e74",
+                        "on-primary-container": "#4a5167",
+                        "tertiary-fixed": "#d5e3fd",
+                        "on-primary-fixed-variant": "#535b71",
+                        "error-container": "#fe8983",
+                        "inverse-primary": "#dae2fd",
+                        "inverse-surface": "#0b0f10",
+                        "surface-dim": "#cfdce3",
+                        "on-tertiary-container": "#455367",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#9f403d",
+                        "primary-fixed": "#dae2fd",
+                        "surface-variant": "#d9e4ea",
+                        "surface-container-highest": "#d9e4ea",
+                        "secondary-fixed-dim": "#c7d5ed",
+                        "on-background": "#2a3439",
+                        "surface": "#f7f9fb",
+                        "tertiary-dim": "#465469",
+                        "secondary-dim": "#465468",
+                        "secondary-fixed": "#d5e3fc",
+                        "on-primary-fixed": "#373f54",
+                        "secondary-container": "#d5e3fc",
+                        "on-secondary-fixed-variant": "#4e5c71",
+                        "inverse-on-surface": "#9a9d9f",
+                        "outline-variant": "#a9b4b9",
+                        "tertiary-container": "#d5e3fd",
+                        "on-tertiary-fixed": "#324054",
+                        "on-error": "#fff7f6",
+                        "on-secondary": "#f8f8ff",
+                        "primary-container": "#dae2fd",
+                        "surface-container": "#e8eff3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#f7f7ff",
+                        "error-dim": "#4e0309",
+                        "outline": "#717c82",
+                        "on-surface": "#2a3439",
+                        "primary-dim": "#4a5268",
+                        "on-error-container": "#752121"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-surface font-body text-on-surface flex flex-col min-h-screen">
+    <!-- TopAppBar -->
+    <header class="w-full sticky top-0 z-50 bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <nav class="max-w-[48rem] mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-2">
+                <span
+                    class="text-xl font-bold text-[#0F172A] dark:text-[#f7f9fb] font-['Space_Grotesk'] tracking-tight">Core
+                    Auth</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a class="text-[#0F172A] dark:text-white border-b-2 border-[#565e74] pb-1 font-['Space_Grotesk'] font-bold tracking-tight transition-colors duration-200"
+                    href="<%=url%>">Docs</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] font-['Space_Grotesk'] font-bold tracking-tight hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200"
+                    href="<%=url%>/endpoints">Endpoints</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>/tokens">Tokens</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <span
+                    class="material-symbols-outlined text-[#565e74] dark:text-[#a9b4b9] cursor-pointer scale-95 active:opacity-80 transition-all"
+                    data-icon="terminal">terminal</span>
+                <a class="bg-primary text-on-primary px-4 py-1.5 rounded text-sm font-medium hover:opacity-90 transition-all active:scale-95"
+                    href="<%= githubUrl %>">GitHub</a>
+            </div>
+        </nav>
+    </header>
+    <main class="flex-grow max-w-[48rem] mx-auto w-full px-6 py-12">
+        <!-- Hero Section -->
+        <section class="mb-16">
+            <h1 class="text-[3.5rem] font-headline font-bold text-on-surface leading-tight tracking-tighter mb-4">
+                The Architectural <br><span class="text-primary">Auth Layer.</span>
+            </h1>
+            <p class="text-lg text-on-surface-variant max-w-xl leading-relaxed mb-8">
+                Secure, scalable authentication service with JWT, refresh tokens, and session management. Built for
+                engineers who demand cryptographic precision.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-6 bg-surface-container-lowest rounded-xl flex flex-col gap-3">
+                    <span class="text-[0.65rem] font-mono uppercase tracking-[0.2em] text-outline">Repository</span>
+                    <a class="flex items-center gap-2 text-primary font-medium hover:underline" href="<%= githubUrl %>">
+                        <%= githubUrl.split("//")[1]%>
+                            <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span>
+                    </a>
+                </div>
+                <div class="p-6 bg-surface-container-lowest rounded-xl flex flex-col gap-3">
+                    <span class="text-[0.65rem] font-mono uppercase tracking-[0.2em] text-outline">API Base URL</span>
+                    <code
+                        class="text-on-surface font-mono text-sm bg-surface-container-highest px-2 py-1 rounded w-fit">
+                        <a class="flex items-center gap-2 text-primary font-medium hover:underline"
+                            href="<%= url %>">
+                        <%= url%>
+                        </a>
+                    </code>
+                </div>
+            </div>
+        </section>
+        <!-- Health Check -->
+        <section class="mb-12">
+            <div
+                class="p-4 bg-secondary-container/30 border-l-4 border-primary rounded-r-lg flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-primary" data-icon="monitor_heart"
+                        style="font-variation-settings: 'FILL' 1;">monitor_heart</span>
+                    <div>
+                        <p class="text-sm font-bold text-on-surface">System Status</p>
+                        <p class="text-xs text-on-surface-variant font-mono">GET /health • <span
+                                class="text-primary font-bold">UP</span></p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                    <span class="text-[0.65rem] font-mono text-primary font-bold">LATENCY: 14ms</span>
+                </div>
+            </div>
+        </section>
+        <!-- Features Bento Grid -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-headline font-bold text-on-surface mb-8">System Capabilities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-surface-container-low p-6 rounded-lg md:col-span-2">
+                    <span class="material-symbols-outlined text-primary mb-4" data-icon="key">key</span>
+                    <h3 class="font-bold text-on-surface mb-2">JWT Access/Refresh Tokens</h3>
+                    <p class="text-sm text-on-surface-variant">Dual-token architecture with stateless validation and
+                        stateful persistence for refresh cycles.</p>
+                </div>
+                <div class="bg-surface-container-highest p-6 rounded-lg">
+                    <span class="material-symbols-outlined text-primary mb-4" data-icon="sync">sync</span>
+                    <h3 class="font-bold text-on-surface mb-2">Token Rotation</h3>
+                    <p class="text-sm text-on-surface-variant">Automatic reuse detection for refresh tokens to prevent
+                        replay attacks.</p>
+                </div>
+                <div class="bg-surface-container-highest p-6 rounded-lg">
+                    <span class="material-symbols-outlined text-primary mb-4" data-icon="logout">logout</span>
+                    <h3 class="font-bold text-on-surface mb-2">Session Invalidation</h3>
+                    <p class="text-sm text-on-surface-variant">Instant global logout by blacklisting refresh families.
+                    </p>
+                </div>
+                <div class="bg-surface-container-low p-6 rounded-lg md:col-span-2">
+                    <span class="material-symbols-outlined text-primary mb-4" data-icon="password">password</span>
+                    <h3 class="font-bold text-on-surface mb-2">OTP &amp; Password Recovery</h3>
+                    <p class="text-sm text-on-surface-variant">Encrypted one-time passwords and secure multi-step
+                        password reset flows with expiration logic.</p>
+                </div>
+                <div class="bg-surface-container-low p-6 rounded-lg">
+                    <span class="material-symbols-outlined text-primary mb-4" data-icon="archive">archive</span>
+                    <h3 class="font-bold text-on-surface mb-2">Account Archive</h3>
+                    <p class="text-sm text-on-surface-variant">Soft-delete logic for GDPR compliance.</p>
+                </div>
+            </div>
+        </section>
+        <!-- How it works -->
+        <section class="mb-16 p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/10">
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/3">
+                    <h2 class="text-2xl font-headline font-bold text-on-surface leading-tight">Access vs Refresh Tokens
+                    </h2>
+                    <p class="mt-4 text-sm text-on-surface-variant leading-relaxed">
+                        The core of our security model relies on the separation of concerns between short-lived
+                        credentials and long-lived session persistence.
+                    </p>
+                </div>
+                <div class="md:w-2/3 space-y-6">
+                    <div class="flex gap-4">
+                        <div
+                            class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+                            <span class="text-xs font-mono font-bold text-primary">01</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm mb-1">Access Token (Short-lived)</h4>
+                            <p class="text-sm text-on-surface-variant">Stored in memory or non-persistent storage.
+                                Validates identity for 15 minutes via RSA256 signature.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div
+                            class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+                            <span class="text-xs font-mono font-bold text-primary">02</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm mb-1">Refresh Token (Long-lived)</h4>
+                            <p class="text-sm text-on-surface-variant">Securely stored in HttpOnly cookies. Used solely
+                                to exchange for a new access token without re-authentication.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- API Routes Table -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-headline font-bold text-on-surface mb-6">Endpoint Reference</h2>
+            <div class="overflow-hidden bg-surface-container-low rounded-xl">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-surface-container-high">
+                            <th
+                                class="px-6 py-4 text-[0.65rem] font-mono uppercase tracking-widest text-on-surface-variant">
+                                Method</th>
+                            <th
+                                class="px-6 py-4 text-[0.65rem] font-mono uppercase tracking-widest text-on-surface-variant">
+                                Route</th>
+                            <th
+                                class="px-6 py-4 text-[0.65rem] font-mono uppercase tracking-widest text-on-surface-variant">
+                                Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-surface-variant">
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-secondary-container px-2 py-0.5 rounded font-mono text-[0.7rem] font-bold text-on-secondary-container">POST</span>
+                            </td>
+                            <td class="px-6 py-4 font-mono text-sm text-on-surface">/auth/login</td>
+                            <td class="px-6 py-4 text-sm text-on-surface-variant">Authenticates user &amp; returns token
+                                pair.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-secondary-container px-2 py-0.5 rounded font-mono text-[0.7rem] font-bold text-on-secondary-container">POST</span>
+                            </td>
+                            <td class="px-6 py-4 font-mono text-sm text-on-surface">/auth/register</td>
+                            <td class="px-6 py-4 text-sm text-on-surface-variant">Creates new user identity.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-secondary-container px-2 py-0.5 rounded font-mono text-[0.7rem] font-bold text-on-secondary-container">GET</span>
+                            </td>
+                            <td class="px-6 py-4 font-mono text-sm text-on-surface">/auth/refresh</td>
+                            <td class="px-6 py-4 text-sm text-on-surface-variant">Exchanges refresh cookie for new
+                                access token.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-secondary-container px-2 py-0.5 rounded font-mono text-[0.7rem] font-bold text-on-secondary-container">DELETE</span>
+                            </td>
+                            <td class="px-6 py-4 font-mono text-sm text-on-surface">/auth/logout</td>
+                            <td class="px-6 py-4 text-sm text-on-surface-variant">Invalidates session &amp; clears
+                                cookies.</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="bg-secondary-container px-2 py-0.5 rounded font-mono text-[0.7rem] font-bold text-on-secondary-container">GET</span>
+                            </td>
+                            <td class="px-6 py-4 font-mono text-sm text-on-surface">/health</td>
+                            <td class="px-6 py-4 text-sm text-on-surface-variant">Service health &amp; database
+                                heartbeat.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- Try API / CURL -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-headline font-bold text-on-surface mb-6">Developer Playground</h2>
+            <div class="space-y-4">
+                <div class="bg-inverse-surface p-6 rounded-xl overflow-x-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono text-inverse-on-surface uppercase tracking-widest">Login
+                            Example</span>
+                        <span
+                            class="material-symbols-outlined text-inverse-on-surface text-sm cursor-pointer hover:text-white"
+                            data-icon="content_copy">content_copy</span>
+                    </div>
+                    <code class="text-primary-fixed-dim font-mono text-sm leading-relaxed">
+                        curl -X POST http://localhost:3000/auth/login \<br>
+                        &nbsp;&nbsp;-H "Content-Type: application/json" \<br>
+                        &nbsp;&nbsp;-d '{"email": "admin@coreauth.io", "password": "secure_password"}'
+                    </code>
+                </div>
+                <div class="bg-inverse-surface p-6 rounded-xl overflow-x-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono text-inverse-on-surface uppercase tracking-widest">Register
+                            User</span>
+                        <span
+                            class="material-symbols-outlined text-inverse-on-surface text-sm cursor-pointer hover:text-white"
+                            data-icon="content_copy">content_copy</span>
+                    </div>
+                    <code class="text-primary-fixed-dim font-mono text-sm leading-relaxed">
+                        curl -X POST http://localhost:3000/auth/register \<br>
+                        &nbsp;&nbsp;-H "Content-Type: application/json" \<br>
+                        &nbsp;&nbsp;-d '{"username": "dev_architect", "email": "dev@coreauth.io", "password": "root_password"}'
+                    </code>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full mt-auto bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <div
+            class="max-w-[48rem] mx-auto flex flex-col md:flex-row justify-between items-center py-12 px-6 opacity-60 bg-[#f0f4f7] dark:bg-[#1a1f21] transition-opacity duration-300">
+            <div
+                class="text-[#565e74] dark:text-[#a9b4b9] font-['Inter'] text-[0.75rem] uppercase tracking-wider mb-4 md:mb-0">
+                © 2024 Core Auth Infrastructure
+            </div>
+            <div class="flex gap-6">
+                <a class="text-[#566166] opacity-70 font-['Inter'] text-[0.75rem] uppercase tracking-wider hover:opacity-100 underline decoration-[#565e74]"
+                    href="#">Status</a>
+                <a class="text-[#566166] opacity-70 font-['Inter'] text-[0.75rem] uppercase tracking-wider hover:opacity-100 underline decoration-[#565e74]"
+                    href="#">Security</a>
+                <a class="text-[#566166] opacity-70 font-['Inter'] text-[0.75rem] uppercase tracking-wider hover:opacity-100 underline decoration-[#565e74]"
+                    href="#">Privacy</a>
+                <a class="text-[#566166] opacity-70 font-['Inter'] text-[0.75rem] uppercase tracking-wider hover:opacity-100 underline decoration-[#565e74]"
+                    href="#">API Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

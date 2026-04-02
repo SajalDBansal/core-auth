@@ -36,6 +36,8 @@ const config = {
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET!,
     GOOGLE_REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN!,
     GOOGLE_USER: process.env.GOOGLE_USER!,
+    GITHUB_URL: process.env.GITHUB_URL || "https://github.com/SajalDBansal/core-auth",
+    HOST_URL: process.env.HOST || "https://github.com/SajalDBansal/core-auth",
 }
 
 export default config;

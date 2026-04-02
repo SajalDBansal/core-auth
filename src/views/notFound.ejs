@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Core Auth - Secure Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="<%=url%>/css/output.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#f8f8ff",
+                        "tertiary": "#526075",
+                        "secondary": "#526074",
+                        "surface-container-high": "#e1e9ee",
+                        "on-surface-variant": "#566166",
+                        "primary": "#565e74",
+                        "primary-fixed-dim": "#ccd4ee",
+                        "on-secondary-container": "#455367",
+                        "surface-container-low": "#f0f4f7",
+                        "on-tertiary-fixed-variant": "#4e5c71",
+                        "tertiary-fixed-dim": "#c7d5ee",
+                        "background": "#f7f9fb",
+                        "surface-tint": "#565e74",
+                        "on-primary-container": "#4a5167",
+                        "tertiary-fixed": "#d5e3fd",
+                        "on-primary-fixed-variant": "#535b71",
+                        "error-container": "#fe8983",
+                        "inverse-primary": "#dae2fd",
+                        "inverse-surface": "#0b0f10",
+                        "surface-dim": "#cfdce3",
+                        "on-tertiary-container": "#455367",
+                        "surface-bright": "#f7f9fb",
+                        "error": "#9f403d",
+                        "primary-fixed": "#dae2fd",
+                        "surface-variant": "#d9e4ea",
+                        "surface-container-highest": "#d9e4ea",
+                        "secondary-fixed-dim": "#c7d5ed",
+                        "on-background": "#2a3439",
+                        "surface": "#f7f9fb",
+                        "tertiary-dim": "#465469",
+                        "secondary-dim": "#465468",
+                        "secondary-fixed": "#d5e3fc",
+                        "on-primary-fixed": "#373f54",
+                        "secondary-container": "#d5e3fc",
+                        "on-secondary-fixed-variant": "#4e5c71",
+                        "inverse-on-surface": "#9a9d9f",
+                        "outline-variant": "#a9b4b9",
+                        "tertiary-container": "#d5e3fd",
+                        "on-tertiary-fixed": "#324054",
+                        "on-error": "#fff7f6",
+                        "on-secondary": "#f8f8ff",
+                        "primary-container": "#dae2fd",
+                        "surface-container": "#e8eff3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#f7f7ff",
+                        "error-dim": "#4e0309",
+                        "outline": "#717c82",
+                        "on-surface": "#2a3439",
+                        "primary-dim": "#4a5268",
+                        "on-error-container": "#752121"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+    <!-- TopAppBar -->
+    <header class="w-full sticky top-0 z-50 bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <div class="max-w-[48rem] mx-auto flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-[#0F172A] dark:text-[#f7f9fb] font-headline tracking-tight">Core
+                    Auth</span>
+            </div>
+            <nav class="hidden md:flex items-center gap-6">
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>">Docs</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>/endpoints">Endpoints</a>
+                <a class="text-[#566166] dark:text-[#a9b4b9] hover:text-[#0F172A] dark:hover:text-white transition-colors duration-200 font-['Space_Grotesk'] font-bold tracking-tight"
+                    href="<%=url%>/tokens">Tokens</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button
+                    class="text-[#565e74] dark:text-[#a9b4b9] hover:text-[#0F172A] transition-all scale-95 active:opacity-80">
+                    <span class="material-symbols-outlined">terminal</span>
+                </button>
+                <a class="bg-primary text-on-primary px-4 py-1.5 rounded text-sm font-medium hover:opacity-90 transition-all active:scale-95"
+                    href="<%= githubUrl %>">GitHub</a>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Canvas -->
+    <main class="flex-grow max-w-[48rem] mx-auto w-full px-6 py-12 md:py-20">
+        <!-- Error Hero -->
+        <div class="mb-16 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-error-container/10 text-error mb-6">
+                <span class="material-symbols-outlined text-[1.2rem]">error</span>
+                <span class="text-xs font-mono font-bold tracking-widest uppercase">Error 404</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-headline font-bold text-on-background tracking-tighter mb-4">Route Not
+                Found</h1>
+            <p class="text-on-surface-variant text-lg max-w-lg">The requested route does not exist. Check the
+                documentation or use one of the valid endpoints listed below.</p>
+            <div class="mt-8">
+                <a class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded font-medium hover:bg-primary-dim transition-all active:scale-95"
+                    href="/">
+                    <span class="material-symbols-outlined">home</span>
+                    Go Back Home
+                </a>
+            </div>
+        </div>
+        <!-- Directory Section -->
+        <div class="space-y-12">
+            <!-- Category: Auth Routes -->
+            <section>
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="headline-sm text-xl font-headline font-bold text-on-background">Auth Routes</h2>
+                    <span
+                        class="text-[0.7rem] font-mono font-bold tracking-widest uppercase text-on-surface-variant bg-surface-container-low px-2 py-1 rounded">/api/auth/*</span>
+                </div>
+                <div class="grid gap-px bg-surface-container overflow-hidden rounded-lg">
+                    <!-- GET Session -->
+                    <div class="bg-surface-container-lowest p-6 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="bg-secondary-fixed text-on-secondary-container font-mono text-[0.7rem] px-2 py-0.5 rounded font-bold uppercase tracking-wider">GET</span>
+                                <code class="font-mono text-sm text-primary font-medium">/api/auth/session</code>
+                            </div>
+                            <p class="text-sm text-on-surface-variant">Retrieve current session metadata and state.</p>
+                        </div>
+                    </div>
+                    <!-- POST Login -->
+                    <div class="bg-surface-container-lowest p-6 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="bg-primary-container text-on-primary-container font-mono text-[0.7rem] px-2 py-0.5 rounded font-bold uppercase tracking-wider">POST</span>
+                                <code class="font-mono text-sm text-primary font-medium">/api/auth/login</code>
+                            </div>
+                            <p class="text-sm text-on-surface-variant">Authenticate credentials and generate JWT.</p>
+                        </div>
+                    </div>
+                    <!-- POST Register -->
+                    <div class="bg-surface-container-lowest p-6 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="bg-primary-container text-on-primary-container font-mono text-[0.7rem] px-2 py-0.5 rounded font-bold uppercase tracking-wider">POST</span>
+                                <code class="font-mono text-sm text-primary font-medium">/api/auth/register</code>
+                            </div>
+                            <p class="text-sm text-on-surface-variant">Initialize a new user identity in the registry.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Category: System Health -->
+            <section>
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="headline-sm text-xl font-headline font-bold text-on-background">System Health</h2>
+                    <span
+                        class="text-[0.7rem] font-mono font-bold tracking-widest uppercase text-on-surface-variant bg-surface-container-low px-2 py-1 rounded">/system</span>
+                </div>
+                <div class="grid gap-px bg-surface-container overflow-hidden rounded-lg">
+                    <div class="bg-surface-container-lowest p-6 hover:bg-surface-container-low transition-colors group">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="bg-secondary-fixed text-on-secondary-container font-mono text-[0.7rem] px-2 py-0.5 rounded font-bold uppercase tracking-wider">GET</span>
+                                <code class="font-mono text-sm text-primary font-medium">/health</code>
+                            </div>
+                            <p class="text-sm text-on-surface-variant">Check service availability and dependency status.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Decorative "Missing" Visualization -->
+        <div class="mt-20 opacity-20 pointer-events-none select-none">
+            <div
+                class="bg-surface-container-highest p-8 rounded-xl font-mono text-[0.65rem] leading-relaxed overflow-hidden max-h-40">
+                <div class="text-primary-dim">Incoming Request:</div>
+                <div class="text-on-surface">GET /undefined-route-query?id=404</div>
+                <div class="text-primary-dim mt-2">Router Stack Trace:</div>
+                <div>[INFO] Searching for route match in index.js...</div>
+                <div>[WARN] No match found for "/undefined-route-query"</div>
+                <div>[INFO] Falling back to DefaultErrorHandler</div>
+                <div>[INFO] Rendering 404 template with status code 404</div>
+                <div class="text-error mt-1">ERROR: RouteNotFoundException at core-router/dispatch.ts:88</div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full mt-auto bg-[#f7f9fb] dark:bg-[#0b0f10]">
+        <div class="max-w-[48rem] mx-auto flex flex-col md:flex-row justify-between items-center py-12 px-6 opacity-60">
+            <span
+                class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#565e74] dark:text-[#a9b4b9] mb-4 md:mb-0">©
+                2024 Core Auth Infrastructure</span>
+            <div class="flex gap-6">
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Status</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Security</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">Privacy</a>
+                <a class="font-['Inter'] text-[0.75rem] uppercase tracking-wider text-[#566166] opacity-70 hover:opacity-100 underline decoration-[#565e74] transition-opacity duration-300"
+                    href="#">API Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
