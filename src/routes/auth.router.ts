@@ -28,20 +28,17 @@ authRouter.post('/verify-otp', asyncHandler(authController.verifyOTP));
 // POST /api/auth/resend-otp
 authRouter.post('/resend-otp', asyncHandler(authController.refreshOTP));
 
-// GET /api/auth/verify-email
-authRouter.get('/verify-email', asyncHandler(authController.verifyEmail));
+// POST /api/auth/forgot-password
+authRouter.post('/forgot-password', asyncHandler(authController.forgotPassword));
 
-// GET /api/auth/forgot-password
-authRouter.get('/forgot-password', asyncHandler(authController.forgotPassword));
+// POST /api/auth/reset-password
+authRouter.post('/reset-password', asyncHandler(authController.resetPassword));
 
-// GET /api/auth/reset-password
-authRouter.get('/reset-password', asyncHandler(authController.resetPassword));
+// POST /api/auth/change-password
+authRouter.post('/change-password', asyncHandler(authController.changePassword));
 
-// GET /api/auth/change-password
-authRouter.get('/change-password', asyncHandler(authController.changePassword));
-
-// GET /api/auth/delete-account
-authRouter.get('/delete-account', asyncHandler(authController.deleteAccount));
+// POST /api/auth/delete-account
+authRouter.post('/archive-account', asyncHandler(authController.archiveAccount));
 
 
 export default authRouter;

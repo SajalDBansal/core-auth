@@ -73,3 +73,29 @@ export class ValidationError extends ApiError {
         return new ValidationError('Validation failed', fieldErrors);
     }
 }
+
+export class MailError extends ApiError {
+    originalError?: unknown;
+
+    constructor(
+        message = "Failed to send email",
+        statusCode: 500 | 503 = 500,
+        originalError?: unknown
+    ) {
+        super(statusCode, message);
+
+        this.name = "MailError";
+        this.originalError = originalError;
+
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+
+    // Optional helpers (recommended)
+    static sendFailed(originalError?: unknown) {
+        return new MailError("Failed to send email", 500, originalError);
+    }
+
+    static serviceUnavailable(originalError?: unknown) {
+        return new MailError("Email service unavailable", 503, originalError);
+    }
+}

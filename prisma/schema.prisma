@@ -13,14 +13,17 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  userName        String
-  email           String    @unique
-  passwordHash    String
-  isEmailVerified Boolean   @default(false)
-  createAt        DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  sessions        Session[]
+  id                       String    @id @default(uuid())
+  userName                 String
+  email                    String    @unique
+  passwordHash             String
+  isEmailVerified          Boolean   @default(false)
+  isArchived               Boolean   @default(false)
+  passwordResetTokenHash   String?
+  passwordResetTokenExpiry DateTime?
+  createAt                 DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+  sessions                 Session[]
 }
 
 model PendingUser {
@@ -35,13 +38,14 @@ model PendingUser {
 }
 
 model Session {
-  id               String   @id @default(uuid())
+  id               String    @id @default(uuid())
   userId           String
-  user             User     @relation(fields: [userId], references: [id])
+  user             User      @relation(fields: [userId], references: [id])
   refreshTokenHash String
   deviceIP         String
   userAgent        String
-  revoke           Boolean  @default(false)
-  createAt         DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  revoke           Boolean   @default(false)
+  revokeAt         DateTime?
+  createAt         DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
