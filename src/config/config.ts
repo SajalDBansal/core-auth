@@ -23,7 +23,8 @@ if (!process.env.JWT_FORGET_PASSWORD_SECRET) {
 }
 
 const config = {
-    NODE_ENV: process.env.NODE_ENV || "production",
+    HOST_PLATFORM: process.env.HOST_PLATFORM || "local",
+    NODE_ENV: process.env.NODE_ENV || "development",
     DATABASE_URL: process.env.DATABASE_URL!,
     FRONTEND_URL: process.env.FRONTEND_URL!,
     PORT: process.env.PORT || 3000,
